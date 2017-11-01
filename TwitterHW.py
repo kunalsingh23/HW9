@@ -74,14 +74,12 @@ for tweet in umsi_tweets['statuses']:
     author = tweet['user']['screen_name']
     time_posted = tweet['created_at']
     tweet_text = tweet['text']
-    retweets = tweet['retweet_count']
+    retweets = (tweet['retweet_count'])
 
     cur.execute("INSERT INTO Tweets (tweet_id, author, time_posted, tweet_text, retweets) VALUES (?, ?, ?, ?, ?)",
     (tweet_id, author, time_posted, tweet_text, retweets))
 
     conn.commit()
-
-cur.close()
 
 
 
@@ -118,14 +116,28 @@ cur.close()
     # take in the view while running from place to place @umichDLHS  @umich…
 # Include the blank line between each tweet.
 
-sqlstr = 'SELECT time_posted, count FROM Counts ORDER BY count DESC LIMIT 10'
+sqlstr = 'SELECT tweet_id, author, time_posted, tweet_text, retweets FROM Tweets'
+
+for row in cur.execute(sqlstr):
+    print (str(row[2] + ' - ' + row[3]))
+    print (' ')
 
 
 # Select the author of all of the tweets (the full rows/tuples of information) that have been retweeted MORE
 # than 2 times, and fetch them into the variable more_than_2_rts.
 # Print the results
 
+more_than_2_rts = []
 
+for row in cur.execute(sqlstr):
+    if row[4] > 2:
+        more_than_2_rts.append(row[1])
+
+print (more_than_2_rts)
+
+
+
+cur.close()
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
