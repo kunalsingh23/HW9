@@ -136,7 +136,6 @@ for row in cur.execute(sqlstr):
 print (more_than_2_rts)
 
 
-
 cur.close()
 
 if __name__ == "__main__":
