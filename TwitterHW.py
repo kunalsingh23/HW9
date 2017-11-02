@@ -130,7 +130,7 @@ for row in cur.execute(sqlstr):
 more_than_2_rts = []
 
 for row in cur.execute(sqlstr):
-    if row[4] > 2:
+    if row[4] >= 3:
         more_than_2_rts.append(row[1])
 
 print (more_than_2_rts)
